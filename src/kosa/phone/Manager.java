@@ -5,9 +5,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.InputMismatchException;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 //전화번호 관리 전반적 기능 
@@ -20,10 +23,15 @@ public class Manager {
 		
 	}
 	
-	public void choiceAddPhoneInfo() throws IOException{
+	public void choiceAddPhoneInfo() throws IOException  {
 		System.out.println("전화번호를 저장할 그룹을 선택해주세요.");
 		System.out.println("1.일반 2.회사 3.대학친구");
-		int choice = DataInput.sc.nextInt();
+		int choice = 0;
+		try {
+			choice = DataInput.sc.nextInt();
+		} catch (InputMismatchException e ) {
+			System.out.println("다시 입력하세요.");
+		}
 		
 		if(choice == 1) {
 			addPhoneInfo();
@@ -31,9 +39,7 @@ public class Manager {
 			addCompanyPhoneInfo();
 		}else if(choice == 3) {
 			addUniversePhonInfo();
-		} else {
-			System.out.println("다시 입력해주세요.");
-		}
+		} 
 		
 	}
 	
@@ -116,6 +122,7 @@ public class Manager {
 //		for(int i=0; i<arr.size(); i++) {
 //			arr.get(i).show();
 //		}
+		
 		arr.stream()
 				.forEach(s -> s.show());
 		System.out.println("----------------");
@@ -126,15 +133,32 @@ public class Manager {
 		String name = DataInput.sc.nextLine();
 		Boolean find = false;
 		
-		for(int i=0; i<arr.size(); i++) {
-			PhoneInfo p = arr.get(i);
-			if(p.getName().equals(name)) {
-				System.out.println("전화번호는 : " + p.getPhoneNo() + "입니다.");
-				System.out.println("생년월일은 : " + p.getBirth() + "입니다.");
-				find = true;
-			}
-		}
-		if(!find) System.out.println("해당 이름은 없습니다.");
+		List<String> filterList = new ArrayList<>();
+		filterList.add(name);
+		
+		List<PhoneInfo> result = arr.stream().filter(o -> filterList
+													.stream()
+													.allMatch(n -> {
+														return o.getName().equals(n);
+													})).collect(Collectors.toList());
+		String reName = result
+			.stream()
+			.findFirst().get().getName();
+		String rePhone = result
+				.stream()
+				.findFirst().get().getPhoneNo();
+		System.out.println("이름은 : " + reName);
+		System.out.println("전화번호는 : " + rePhone);
+		
+//		for(int i=0; i<arr.size(); i++) {
+//			PhoneInfo p = arr.get(i);
+//			if(p.getName().equals(name)) {
+//				System.out.println("전화번호는 : " + p.getPhoneNo() + "입니다.");
+//				System.out.println("생년월일은 : " + p.getBirth() + "입니다.");
+//				find = true;
+//			}
+//		}
+//		if(!find) System.out.println("해당 이름은 없습니다.");
 	}
 	
 	// 이름을 입력받아 해당 PhoneInfo 객체를 추출하고 수정 전화번호 입력 전화번호 수정 완료 
@@ -142,16 +166,22 @@ public class Manager {
 		System.out.println("전화번호를 바꾸고 싶은 사람의 이름을 입력해주세요.");
 		String name = DataInput.sc.nextLine();
 		
-		for(int i=0; i<arr.size(); i++) {
-			PhoneInfo p = arr.get(i);
-			if(p.getName().equals(name)) {
-				System.out.println("전화번호를 입력해주세요.");
-				String changeNum = DataInput.sc.nextLine();
-				p.setPhoneNo(changeNum);
-				System.out.println("변경되었습니다.");
-				break;
-			}
-		}
+		System.out.println("바꿀 전화번호 입력해주세요.");
+		String changePhoneNum = DataInput.sc.nextLine();
+		arr.stream()
+			.filter(o -> o.getName().equals(name))
+			.forEach(p -> p.setPhoneNo(changePhoneNum));
+		
+//		for(int i=0; i<arr.size(); i++) {
+//			PhoneInfo p = arr.get(i);
+//			if(p.getName().equals(name)) {
+//				System.out.println("전화번호를 입력해주세요.");
+//				String changeNum = DataInput.sc.nextLine();
+//				p.setPhoneNo(changeNum);
+//				System.out.println("변경되었습니다.");
+//				break;
+//			}
+//		}
 		
 	}
 
