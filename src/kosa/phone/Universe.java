@@ -1,6 +1,11 @@
 package kosa.phone;
 
-public class Universe extends PhoneInfo {
+import java.io.Serializable;
+
+public class Universe extends PhoneInfo implements Serializable{
+	private String name;
+	private String phoneNo;
+	private String birth;	
 	private String major;
 	private String year; // 학번?
 	
@@ -28,6 +33,15 @@ public class Universe extends PhoneInfo {
 		super(name, phoneNo, birth);
 		this.major = major;
 		this.year = year;
+	}
+	
+	@Override 
+	public void show() {
+		System.out.println("이름: " + name);
+		System.out.println("전화번호: " + phoneNo);
+		System.out.println("생년월일: " + birth);
+		System.out.println("전공은 : " + major);
+		System.out.println("학번은 : " + year);
 	}
 	
 
