@@ -273,6 +273,7 @@ public class Manager {
     public void bringPhoneInfo() {
         ObjectInputStream ois = null;
         LinkedList<PhoneInfo> p1 = null;
+        
         try {
             ois = new ObjectInputStream(new FileInputStream("phone.info"));
             p1 = (LinkedList<PhoneInfo>) ois.readObject();
