@@ -9,9 +9,9 @@ import java.util.regex.Pattern;
 public class MiniDOS {
 
 	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		Util u = new Util();
 		while (true) {
+			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 			System.out.println("입력 : ");
 			String str = br.readLine();
 			
@@ -46,8 +46,9 @@ public class MiniDOS {
 			
 			if (str.equals("shutdown -h")) break;
 		}
+
 		System.out.println("종료합니다.");
 	
 	}
-
+	
 }

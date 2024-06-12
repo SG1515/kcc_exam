@@ -11,7 +11,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.StringTokenizer;
 
-public class Util {
+public class Util  {
 	static String path = "C:\\work\\upload";
 	static StringTokenizer st;
 	public void ls() {
@@ -82,30 +82,25 @@ public class Util {
 		String[] tmp = name.split(" ");
 		String fileName = tmp[1];
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-//		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-		FileWriter fw = FileWriter(path + "\\" + fileName);
+		FileWriter fw = new FileWriter(path + "\\" + fileName);
 		System.out.println("--------------------");
-		String str = "";
+		String str;
 		
-		while(true) {
-			str = br.readLine();
+		while((str = br.readLine()) != null) {
 			if (str.equals("q")) break;
 			str += "\n";
 			fw.write(str);
 			
 		}
+		fw.close();
+
 		
-		br.close();
 
 		System.out.println("Á¾·á");
 		
 		
 	}
 
-	private FileWriter FileWriter(String string) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	private void copyFile(File s, File d) {
 		FileInputStream fis = null;
